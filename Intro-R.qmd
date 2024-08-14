@@ -1,0 +1,181 @@
+```{r}
+## ti
+```
+
+```{r}
+#| label: setup
+#| message: false
+#| output: false
+library(tidyverse)
+library(broom)
+library(flextable)
+```
+
+```{r}
+#| eval: false
+(2/15)/^0.25/*exp(4)-200
+```
+
+```{r}
+x<-2
+```
+
+```{r}
+is.vector(x)
+```
+
+```{r}
+(x<-3)
+```
+
+```{r}
+(y<-5)
+```
+
+```{r}
+(z<-x+y)
+```
+
+```{r}
+(y<-10)
+```
+
+```{r}
+z
+(z<-x+y)
+```
+
+```{r}
+is.integer(z)
+```
+
+```{r}
+x<-5L
+y<-8L
+(z <- x + y)
+```
+
+```{r}
+is.integer(z)
+```
+
+```{r}
+typeof(z)
+```
+
+```{r}
+(x <- c(2, 8, 9, 21:29, 17:12))
+```
+
+```{r}
+(x <- seq(2, 10, by = 2))
+```
+
+```{r}
+(y <- 1:5)
+```
+
+```{r}
+(z <- x + y)
+```
+
+```{r}
+(y <- 1:3)
+```
+
+```{r}
+(z <- x + y)
+```
+
+```{r}
+(x <- seq(2, 12, by = 2))
+```
+
+```{r}
+y
+```
+
+```{r}
+(z <- x + y)
+```
+
+```{r}
+typeof(z)
+```
+
+```{r}
+z <- as.integer(z)
+```
+
+```{r}
+typeof(z)
+```
+
+```{r}
+(z <- c(z, "a"))
+```
+
+```{r}
+# dropper siste element i z
+head(z, n = 3)
+tail(z, n = 3)
+tail(z, n = 1)
+# Droppe siste element
+head(z, n = -1)
+# Droppe første element
+tail(z, n = -1)
+# Droppe 3 siste element
+head(z, n = -3)
+
+```
+
+```{r}
+(z <- head(z, n = -1))
+```
+
+```{r}
+#| eval: false
+(z <- z + 2)
+```
+
+```{r}
+(z <- as.integer(z) + 2)
+```
+
+```{r}
+(z <- z - 2)
+```
+
+```{r}
+(z <- c(z, "a"))
+```
+
+```{r}
+(z <- as.integer(z) + 2)
+```
+
+```{r}
+s <- 2L
+```
+
+```{r}
+(t <- c(s, 0.25))
+```
+
+```{r}
+as.character(t)
+```
+
+```{r}
+z
+```
+
+```{r}
+z[4]
+```
+
+```{r}
+# VIl ha ut tallene 8, 14 og 17 i en ny vektor m
+(m <- z[c(2, 5:6)])
+
+```
