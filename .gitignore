@@ -1,3 +1,9 @@
+# mine endringer
+*.html
+*.docx
+*.pdf
+
+
 # History files
 .Rhistory
 .Rapp.history
