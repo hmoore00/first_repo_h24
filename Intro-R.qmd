@@ -1,5 +1,14 @@
 ```{r}
-## ti
+#|title: "Introduction to R"
+#|author: "Harry"
+#|format:
+  html: default
+  pdf:
+    a4paper: TRUE
+  docx: default
+  editor: visual
+  execute:
+    echo: true
 ```
 
 ```{r}
@@ -9,6 +18,7 @@
 library(tidyverse)
 library(broom)
 library(flextable)
+library(huxtable)
 ```
 
 ```{r}
@@ -178,4 +188,621 @@ z[4]
 # VIl ha ut tallene 8, 14 og 17 i en ny vektor m
 (m <- z[c(2, 5:6)])
 
+```
+
+```{r}
+z
+```
+
+```{r}
+# VIl ha ut tallene 8, 14 og 17 og legge til første element, og legge 
+# resultat inn i vektoren m
+(m <- z[c(2, 5:6)]) + z[1]
+```
+
+```{r}
+z <- c(3, 5, 1, 9)
+```
+
+```{r}
+z[-1]
+```
+
+```{r}
+z[-c(1:2)]
+```
+
+```{r}
+(zz <- z[-c(1,3)])
+```
+
+```{r}
+x <- rnorm(20)
+x <- x[1:10]
+q <- x < 0
+(q + 1)
+```
+
+```{r}
+temp <- c(11, 17, 22, 15, 15, 25)
+weather <- c("Rainy", "Sunny", "Sunny", "Fair", "Fair", "Sunny") 
+```
+
+```{r}
+names(temp) <- weather
+```
+
+```{r}
+temp
+```
+
+```{r}
+temp[names(temp) %in% c("Sunny", "Fair")]
+```
+
+```{r}
+temp[names(temp) == "Sunny"]
+```
+
+```{r}
+names(temp) == "Sunny"
+```
+
+```{r}
+names(temp) != "Sunny"
+```
+
+```{r}
+!(names(temp) == "Sunny")
+```
+
+```{r}
+# some codeing of sex, 1 female, 2 male
+sex <- c(1, 2, 1, 2, 2, 1, 2)
+```
+
+```{r}
+sex_f <- fct(
+  x = as.character (sex),
+  levels = c("1", "2")
+  )
+```
+
+```{r}
+# new labels, "F" for 1 and "M" for 2
+sex_f <- fct(
+  x = as.character (sex), 
+  ) |>
+  recode(
+    "1" = "Kvinner", 
+    "2" = "Menn"
+  )
+```
+
+```{r}
+table(sex_f)
+```
+
+```{r}
+l <- list(
+  x = 1:3,
+  y = c("A", letters[4:13]),
+  z = seq(
+    from = 1.3,
+    to = 2.7,
+    by = 0.2
+    )
+  )
+```
+
+```{r}
+names(l)
+```
+
+```{r}
+l$z
+```
+
+```{r}
+is.vector(l$z)
+```
+
+```{r}
+names(l)
+```
+
+```{r}
+is.vector(names(l))
+```
+
+```{r}
+# Endre navn på y til "new_y"
+```
+
+```{r}
+names(l)[2] <- "new_y"
+```
+
+```{r}
+l$x
+```
+
+```{r}
+l[1]
+```
+
+```{r}
+is.vector(l[1])
+```
+
+```{r}
+is.list(l[1])
+```
+
+```{r}
+l[[1]]
+```
+
+```{r}
+is.vector(l[[1]])
+```
+
+```{r}
+ll <- l[1]
+```
+
+```{r}
+lll <- l[[1]]
+```
+
+```{r}
+is.list(l[[1]])
+```
+
+```{r}
+l <- list(
+  x = 1:3, 
+  y = c("A", letters[4:13]), 
+  z = list(
+    za = seq(from = 1.3, to = 2.7, by = 0.2), 
+    zb = c(TRUE, FALSE), 
+    zc = 5:9,
+    zd = list(1, "F", 3.2)
+    )
+  )
+```
+
+```{r}
+l$z$zd[2]
+```
+
+```{r}
+is.list(l$z$zd[2])
+```
+
+```{r}
+l$z$zd[[2]]
+```
+
+```{r}
+is.list(l$z$zd[[2]])
+```
+
+```{r}
+l
+```
+
+```{r}
+str(l)
+```
+
+### Dataframes
+
+```{r}
+df <- data.frame(
+  x = 1:3,
+  y = letters[1:3],
+  z = LETTERS[1:3]
+  )
+```
+
+```{r}
+tib <- tibble(
+  x = 1:3,
+  y = letters[1:3],
+  z = LETTERS[1:3]
+)
+```
+
+```{r}
+# col 2 by name
+df[, "y"]
+```
+
+```{r}
+is.data.frame(df[, "y"])
+```
+
+```{r}
+is.data.frame(df[1, c("x", "y")])
+```
+
+```{r}
+is_tibble(tib[, "y"])
+```
+
+```{r}
+is_tibble(tib[1, c("x", "y")])
+```
+
+```{r}
+is_tibble(tib[1, "x"])
+```
+
+```{r}
+#| paged.print: false
+tib[1, "x"]
+```
+
+### Hvordan endre verdier i en dataframe/tibble?
+
+```{r}
+df[2, 2]
+```
+
+```{r}
+df[2, 2] <- "B"
+```
+
+```{r}
+df
+```
+
+```{r}
+tib[2, 2] <- "B"
+```
+
+```{r}
+tib
+```
+
+```{r}
+tib[c(1,3), 3] <- c("a", "c")
+```
+
+```{r}
+tib
+```
+
+### Matriser
+
+```{r}
+# define a matirc in R
+X <- matrix(c(2, 2, -1, 5, 2, 6), nrow = 3, byrow = FALSE)
+```
+
+```{r}
+X
+```
+
+```{r}
+#| paged.print: false
+as.data.frame(X)
+```
+
+```{r}
+#| paged.print: false
+as_tibble(X)
+```
+
+```{r}
+(Xr <- matrix(
+  c(2, 2, -1, 5, 2, 6),
+  nrow = 3,
+  byrow = TRUE)
+  )
+```
+
+```{r}
+t(Xr)
+```
+
+```{r}
+Y <- matrix(
+  c(-3, 2, 2.5, 6, -4, 4),
+  nrow = 2,
+  byrow = FALSE
+  )
+```
+
+```{r}
+Y
+```
+
+```{r}
+X %*% Y
+```
+
+```{r}
+XTX <- t(X) %*% X
+```
+
+```{r}
+invXTX <- solve(XTX)
+```
+
+```{r}
+invXTX %*% XTX
+```
+
+### Subsets
+
+```{r}
+dim(cars)
+```
+
+```{r}
+dim(cars)[1]
+```
+
+```{r}
+summary(cars)
+```
+
+```{r}
+(cars_sub <- subset(
+  cars, subset = cars$speed > 6 & cars$speed < 11
+  )
+  )
+```
+
+```{r}
+save(cars_sub, file = "cars_sub.Rdata")
+```
+
+```{r}
+rm(cars_sub)
+```
+
+```{r}
+load(
+  file = "cars_sub.Rdata"
+)
+```
+
+```{r}
+lm_cars <- lm(
+  formula = 'dist ~ speed', data = cars
+)
+```
+
+```{r}
+lm_cars_subset <- lm(
+  formula = 'dist ~ speed', data = cars_sub
+)
+```
+
+```{r}
+save(
+  lm_cars,
+  lm_cars_subset,
+  cars_sub,
+  file = "lm-mods-cars.Rdata"
+)
+```
+
+```{r}
+rm(lm_cars, lm_cars_subset, cars_sub)
+```
+
+```{r}
+rm(list = ls())
+```
+
+```{r}
+load(
+  file = "lm-mods-cars.Rdata",
+  verbose = TRUE
+)
+```
+
+```{r}
+ls()
+```
+
+```{r}
+lm1 <- lm(formula = dist ~ speed, data = cars)
+```
+
+```{r}
+# IKKE ANBEFALT
+lm1$residuals
+```
+
+```{r}
+# Anbefalt
+residuals(lm1)
+```
+
+```{r}
+# IKKE ANBEFALT
+lm1$coefficients
+```
+
+```{r}
+# Anbefalt
+coefficients(lm1)
+```
+
+```{r}
+# Note! -1 at end of formula
+lm2 <- lm(formula = dist ~ speed - 1, data = cars)
+```
+
+```{r}
+# only on a subset of data
+lm3 <- lm(formula = dist ~ speed, 
+          data = cars, 
+          subset = cars$speed > 6 & cars$speed < 11
+          )
+```
+
+```{r}
+huxreg(
+        lm1, lm2, lm3,
+        error_format = "({statistic})", 
+        note         = "{stars}. T statistics in parentheses."
+      )
+```
+
+```{r}
+plot(cars)
+```
+
+```{r}
+plot(mtcars)
+```
+
+```{r}
+plot(
+  x = mtcars$disp,
+  y = mtcars$mpg, 
+  # graphics parameter
+  pch = 11
+)
+#abline(lm(formula = dist ~ speed, data = cars))
+abline(lm(formula = mpg ~ disp, data = mtcars))
+```
+
+```{r}
+plot(cars)
+abline(lm(formula = dist ~ speed, data = cars))
+```
+
+```{r}
+# multiple regression
+# LifeCycleSavings from package Datasets
+mreg1 <- lm(
+  formula =sr ~ pop15 + pop75 + dpi + ddpi, 
+  data = LifeCycleSavings
+  )
+summary(mreg1)
+```
+
+### Functions
+
+```{r}
+add_numbers <- function(x = 0, y = 0) {
+  x + y
+}
+```
+
+```{r}
+add_numbers(2, 2)
+```
+
+```{r}
+add_numbers()
+```
+
+### Iterasjon
+
+```{r}
+start_stupid_fun <- function(x1 = 0, n = 10, step = 2) {
+# initialise x
+x = vector(mode = "numeric", length = n)
+x[1] = x1
+
+for (i in seq_along(x[-1])) {
+  x[i + 1] = x[i] + step
+}
+x
+}
+```
+
+```{r}
+m <- start_stupid_fun(x1 = 1, n = 10000, step = 5) |> 
+  matrix(ncol = 10, byrow = TRUE)
+```
+
+```{r}
+head(m, n = 10)
+```
+
+```{r}
+# probably from jørn
+stupid_fun_b <- function(
+    x1 = 0, 
+    n = 10, 
+    d = 1, # how much to increase number
+    w = 80, # text width in chacters
+    width_fraction = 1, # how wide should the output be
+    print_to_console = TRUE # where to send the output
+    ) {
+  # we stop if we are to produce zero numbers
+  # stopifnot(n > 0) an alternative but throws an error
+  # and stop compilation of the document/presentation
+  if(!floor(n) > 0) return("n needs to be positive.")
+  # max number of digits in numbers
+  dig =  nchar(n*d)
+  # width in number of charcter for output
+  w_out = w * width_fraction
+  # allocate a numeric vector with room for n numbers
+  x = vector(mode = "numeric", length = n)
+  # First number in output vector is x1
+  x[1] = x1
+  # we loop through x vector but drop first element
+  for (i in seq_along(x[-1])) {
+    # i starts at 1, so first is x1 + d
+    x[i + 1] = round(x[i] + d, digits = 2)
+    }
+
+# nice trick to control print to console
+if (print_to_console) {
+print(stringr::str_pad(x, width = dig, side = "left", pad = " "),
+      width = w_out)
+  } else {
+    tibble(x)
+  }
+}
+```
+
+```{r}
+#| paged.print = false
+dat <- stupid_fun_b(n = 70, d = 0.1, w = 70, print_to_console = FALSE)
+```
+
+```{r}
+head_and_tail <- function(x) {
+  c(head(x), tail(x))
+}
+```
+
+```{r}
+head_and_tail(dat)
+```
+
+```{r}
+head_and_tail(mtcars[,1:6])
+```
+
+```{r}
+head_and_tail <- function(x, n=3L) {
+res = rbind(rep('Head',length(names(x))),
+        head(x, n = n),
+        rep('*-*-*',length(names(x))), 
+        rep('Tail',length(names(x))), 
+        tail(x, n = n)
+        )
+as_tibble(res)
+}
+```
+
+```{r}
+#| paged.print: false 
+head_and_tail(mtcars[1:6], n = 7)
+```
+
+```{r}
+# siste
 ```
