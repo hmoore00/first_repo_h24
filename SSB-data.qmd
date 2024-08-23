@@ -8,31 +8,114 @@ editor: visual
 #| label: setup
 library(tidyverse)
 library(readxl)
+library(writexl)
+library(PxWebApiData)
 ```
 
 ```{r}
-ssb_10540 <- read_excel("data/10540.xlsx")
+ssb_10540 <- read_excel("data/10540.xlsx") |>
+fill(
+  # column to fill, Note use of c() when multiple columns
+  c(kom, alder),
+  # NOTE! .direction, NOT direction
+  .direction = "down"
+  ) |>
+rename(ledige = `Registrert helt arbeidsledige`) |> 
+mutate(ledige = as.numeric(ledige))
 ```
-
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document.
-To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code.
-You can embed code like this:
 
 ```{r}
-1 + 1
+#| paged.print: false
+ssb_10540 |> 
+  filter(is.na(ledige))
 ```
-
-You can add options to executable code like this
 
 ```{r}
-#| echo: false
-2 * 2
+write_xlsx(
+  x = ssb_10540,
+  path = "data/ssb_10540.xlsx"
+)
+
+write_csv(
+  x = ssb_10540,
+  file = "data/ssb_10540.csv"
+  )
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+## Leser inn csv filen laget ovenfor
+
+```{r}
+ssb_10540 <- read_csv("data/ssb_10540.csv", show_col_types = FALSE)
+```
+
+```{r}
+spec(ssb_10540)
+```
+
+## Leser inn csv fil fra ssb
+
+```{r}
+raw10540 <- read_delim("raw10540.csv", delim = ";", 
+    escape_double = FALSE, locale = locale(encoding = "ISO-8859-1"), 
+    trim_ws = TRUE, skip = 1)
+```
+
+```{r}
+names(raw10540)
+```
+
+## PxWebApiData
+
+```{r}
+metadata_10540 <- ApiData(
+  "http://data.ssb.no/api/v0/en/table/10540",
+  returnMetaFrames = TRUE
+  )
+```
+
+```{r}
+#| paged.print: false
+#| eval: false
+metadata_10540 |> View()
+```
+
+```{r}
+#| eval: false
+#Get more info about table
+ApiData(
+"http://data.ssb.no/api/v0/en/table/10540",
+returnApiQuery = TRUE
+) 
+```
+
+```{r}
+unemp99to10_for_11_46 <- ApiData12(
+  "http://data.ssb.no/api/v0/en/table/10540",
+  # Have not been able to specify more complex regions
+  Region = list(c("11*", "46*")),
+  Tid = paste0(
+    rep(1999:2010, each = 12), 
+    "M",
+    sprintf("%02d", 1:12)
+  )
+  ) |> 
+  select(Region, region, Tid, Alder, "ledige" = value) |> 
+as_tibble()
+```
+
+```{r}
+names(unemp99to02)
+```
+
+```{r}
+# save it as csv
+write.table(unemp99to10_for_11_46,
+  file = "data/unemp99to10_for_11_46.csv",
+  dec = ".",
+  sep = ","
+)
+```
+
+```{r}
+# siste
+```
