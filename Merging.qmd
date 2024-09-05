@@ -15,3 +15,5 @@ When you click the **Render** button a document will be generated that includes 
 You can embed code like this:
 
 Dette er bare noe ny tekst for å teste merging i RStudio.
+
+En setning til lagt til.
