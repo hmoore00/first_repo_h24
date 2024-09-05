@@ -9,9 +9,8 @@ editor: visual
 Quarto enables you executable code into a finished document.
 To learn more about Quarto see <https://quarto.org>.
 
-Quarto enables you to weave together content and executable 
 
-## Running Code
+Quarto enables you to weave together content and executable 
 
 When you click the **Render** button a document will be generated that includes both content and the output of embedded code.
 You can embed code like this:
@@ -20,11 +19,6 @@ You can embed code like this:
 1 + 1
 ```
 
-You can add options disablles to executable code 
-
-```{r}
-#| echo: false
-2 * 2
-```
+You can add options disables to executable code 
 
 The `echo: false` option disables the printing of code (only output is displayed).
