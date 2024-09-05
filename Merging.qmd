@@ -6,7 +6,7 @@ editor: visual
 
 ## Quarto
 
-Quarto enables me to weave together content and executable code into a finished document.
+Quarto enables you, more drastic changes needed, to make content better to executable code into a finished document.
 To learn more about Quarto see <https://quarto.org>.
 
 ## Running Code
