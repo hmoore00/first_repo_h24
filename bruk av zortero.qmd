@@ -1,0 +1,13 @@
+---
+title: "Bruk av Zortero"
+format:
+ html: default
+ pdf: default
+ docx: default
+editor: visual
+bibliography: "ds_h24.bib"
+---
+
+## Siteringer i Quarto dokument
+
+Legger inn referansen @thorsenNetworkApproachCommuting1999 og til slutt [@oslandApplicationSpatialEconometrics2010].
